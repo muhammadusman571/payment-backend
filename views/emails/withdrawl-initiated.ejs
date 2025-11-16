@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f4f7;
+      }
+      .email-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        color: #333;
+      }
+      .email-header {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eaeaea;
+      }
+      .email-header h2 {
+        margin: 0;
+        color: #d84315;
+        font-size: 24px;
+      }
+      .email-body {
+        padding: 25px 0;
+        line-height: 1.6;
+        font-size: 15px;
+        color: #555;
+      }
+      .highlight {
+        background-color: #fff3e0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 20px 0;
+        border-left: 5px solid #ff9800;
+      }
+      .highlight p {
+        margin: 8px 0;
+      }
+      .email-footer {
+        text-align: center;
+        font-size: 12px;
+        color: #999;
+        margin-top: 40px;
+        padding-top: 15px;
+        border-top: 1px solid #e0e0e0;
+      }
+      .action-link {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #ff5722;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="email-header">
+        <h2>Agent Withdrawal Request</h2>
+      </div>
+      <div class="email-body">
+        <p>Dear Super Admin,</p>
+        <p>
+          The following withdrawal request has been initiated and requires your
+          review.
+        </p>
+
+        <div class="highlight">
+          <p><strong>Agent Name:</strong> <%= payment.agent_name %></p>
+          <p><strong>Amount:</strong> <%= payment.amount %></p>
+          <!-- <p><strong>Request Time:</strong> <%= payment.date %></p> -->
+          <p><strong>Provider:</strong> <%= payment.show_name %></p>
+        </div>
+
+        <p>Please review and take the necessary action.</p>
+
+        <a class="action-link" href="<%= payment.link %>" target="_blank"
+          >Review & Process Withdrawal</a
+        >
+
+        <p style="margin-top: 25px">
+          Thank you,<br />
+          MilkySwipe Admin System
+        </p>
+      </div>
+      <div class="email-footer">
+        &copy; 2025 MilkySwipe.com. All rights reserved.
+      </div>
+    </div>
+  </body>
+</html>

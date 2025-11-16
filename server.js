@@ -17,17 +17,20 @@ const QueryMessageController = require("./controllers/queryMessageController");
 
 dotenv.config();
 
-const allowedOrigins = ["https://milkyswipe.com", "http://localhost:3000"];
 const PORT = process.env.PORT;
 
 const app = express();
 
+/** ⭐ ALLOW ALL ORIGIN (CORS CLEAN VERSION) */
 app.use(
   cors({
-    origin: true, // Reflects the request origin
-    credentials: true,
+    origin: "*", // allow ALL origins
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: false, // must be false when using origin "*"
   })
 );
+
 app.use((req, res, next) => {
   console.log(
     "Request URL:",
@@ -35,30 +38,13 @@ app.use((req, res, next) => {
   );
   next();
 });
-// app.use((req, res, next) => {
-//   const origin = req.headers.origin;
-//   if (allowedOrigins.includes(origin)) {
-//     res.setHeader("Access-Control-Allow-Origin", origin);
-//   }
-//   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   res.setHeader("Access-Control-Allow-Credentials", "true");
-//   next();
-// });
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      callback(null, true); // allow all origins
-    },
-    credentials: true,
-  })
-);
-app.use(express.json({ limit: "10mb" })); // or higher, e.g., '20mb'
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Then from 'public/uploads' if not found in 'uploads'
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+
 /** Routes */
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/payment", require("./routes/paymentRoutes"));
@@ -91,8 +77,8 @@ if (process.env.NODE_ENV === "production") {
 
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
-    credentials: true,
+    origin: "*", // allow all origins for socket.io also
+    methods: ["GET", "POST"],
   },
 });
 
@@ -118,7 +104,6 @@ app.set("io", io);
 
 server.listen(PORT, () => {
   (async () => {
-    // await ImapUtils.restoreConnectionsFromDB();
     console.log(
       `🚀 ${
         process.env.NODE_ENV === "production" ? "Secure" : "Dev"

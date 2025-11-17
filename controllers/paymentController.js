@@ -226,7 +226,7 @@ exports.generateInvoiceLink = async (req, res) => {
       color: { dark: "#000000", light: "#ffffff" },
     });
 
-    const qrUrl = `http://localhost:3007/uploads/${orderId}.png`;
+    const qrUrl = `https://payment.thewebdevonline.com/api/uploads/${orderId}.png`;
     data.qrUrl = qrUrl;
     await data.save();
 

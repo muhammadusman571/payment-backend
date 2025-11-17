@@ -233,7 +233,7 @@ exports.generateInvoiceLink = async (req, res) => {
     res.status(200).json({
       message: "USDT QR generated",
       orderId,
-      checkoutLink: `http://localhost:3000/invoice?orderId=${orderId}`,
+      checkoutLink: `https://payment.thewebdevonline.com/invoice?orderId=${orderId}`,
       address,
       amount, // optional
       qrUrl,
